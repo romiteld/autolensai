@@ -63,27 +63,42 @@ export const GlassmorphicCard = ({
 };
 
 export const ParticleField = ({ count = 50 }: { count?: number }) => {
-  const particles = Array.from({ length: count }, (_, i) => i);
+  const particles = Array.from({ length: count }, (_, i) => {
+    // Use deterministic values based on index to avoid hydration mismatch
+    const seed = i * 1.618033988749; // Golden ratio for better distribution
+    const left = ((seed * 100) % 100);
+    const top = ((seed * 137.5) % 100); // Different multiplier for y-axis
+    const duration = 2 + (seed % 3);
+    const delay = (seed * 0.5) % 2;
+    
+    return {
+      id: i,
+      left,
+      top,
+      duration,
+      delay,
+    };
+  });
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {particles.map((particle) => (
         <motion.div
-          key={particle}
-          className="absolute w-1 h-1 bg-blue-400 rounded-full opacity-60"
+          key={particle.id}
+          className="absolute w-1 h-1 bg-sky-400 rounded-full opacity-60"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: `${particle.left}%`,
+            top: `${particle.top}%`,
           }}
           animate={{
             y: [-20, -100],
             opacity: [0, 1, 0],
           }}
           transition={{
-            duration: Math.random() * 3 + 2,
+            duration: particle.duration,
             repeat: Infinity,
             ease: 'linear',
-            delay: Math.random() * 2,
+            delay: particle.delay,
           }}
         />
       ))}
@@ -97,10 +112,10 @@ export const AnimatedGradient = ({ className = '' }: { className?: string }) => 
       className={`absolute inset-0 ${className}`}
       animate={{
         background: [
-          'linear-gradient(45deg, #3b82f6, #8b5cf6)',
-          'linear-gradient(90deg, #8b5cf6, #06b6d4)',
-          'linear-gradient(135deg, #06b6d4, #10b981)',
-          'linear-gradient(180deg, #10b981, #3b82f6)',
+          'linear-gradient(45deg, #0ea5e9, #64748b)',
+          'linear-gradient(90deg, #64748b, #ef4444)',
+          'linear-gradient(135deg, #ef4444, #1f2937)',
+          'linear-gradient(180deg, #1f2937, #0ea5e9)',
         ],
       }}
       transition={{

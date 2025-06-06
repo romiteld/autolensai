@@ -19,6 +19,11 @@ npm run lint
 
 # Environment validation
 npm run env:check
+
+# Testing (when implemented)
+# npm run test        # Run all tests
+# npm run test:unit   # Run unit tests only
+# npm run test:e2e    # Run end-to-end tests
 ```
 
 ## Architecture Overview
@@ -138,7 +143,13 @@ Background jobs should:
 4. Clean up resources on completion or failure
 
 ### Environment Management
-Environment variables are validated using Zod schemas. Required variables will cause startup failures, while optional variables log warnings. Use `npm run env:check` to validate configuration.
+Environment variables are validated using Zod schemas in `/src/core/config/env.schema.ts`. Required variables will cause startup failures, while optional variables log warnings. Use `npm run env:check` to validate configuration.
+
+**Critical Environment Variables**:
+- Supabase (auth/database): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+- AI Services: `OPENAI_API_KEY`, `CLOUDINARY_*`, `FAL_AI_API_KEY`, `SONAUTO_API_KEY`
+- Payments: `STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY`
+- Queue System: `REDIS_URL` (optional, defaults to memory)
 
 ## Video Generation Pipeline
 
@@ -160,3 +171,46 @@ This pipeline is queue-based with real-time progress tracking and takes 6-9 minu
 - **Enterprise ($299/month)**: Unlimited usage, white-label options, API access
 
 Feature access is controlled at both the API and service levels using subscription middleware.
+
+## Performance Optimizations
+
+**Animation System**: Performance monitoring is temporarily disabled due to SSR compatibility issues. The system uses:
+- Framer Motion for React component animations
+- GSAP with ScrollTrigger for advanced scroll-based effects
+- 60fps performance targets with automatic quality adjustment
+- Client-side only initialization to prevent SSR conflicts
+
+**Image Processing**: Multi-format support (WebP, AVIF, PNG, JPG) with automatic optimization and responsive variants generation.
+
+## Frontend Architecture Details
+
+**Dashboard Design**: Premium dark theme with glass morphism effects, gradient backgrounds, and sophisticated animations. Uses a Command Center approach with:
+- 80px sidebar with quick actions and navigation
+- Real-time status indicators and AI system monitoring
+- Interactive cards with hover effects and micro-interactions
+- Performance metrics with animated progress bars
+
+**Component Organization**:
+- `/src/common/components/ui/` - Reusable UI components (buttons, cards, inputs)
+- `/src/common/components/sections/` - Page sections (hero, features, testimonials)
+- `/src/common/components/animations/` - Animation utilities and effects
+- `/src/{domain}/components/` - Domain-specific components (vehicle, payment, etc.)
+
+## Authentication Flow
+
+The system uses Supabase Auth with:
+- Email/password registration with validation
+- Google OAuth integration
+- Automatic profile creation via callback handler
+- Middleware-based route protection
+- RLS policies for data isolation
+- Session management with HTTP-only cookies
+
+## Testing Structure
+
+Test directories are organized by type:
+- `/src/tests/unit/` - Unit tests for individual functions/components
+- `/src/tests/integration/` - Integration tests for service interactions
+- `/src/tests/e2e/` - End-to-end user flow tests
+- `/src/tests/fixtures/` - Test data and mock responses
+- `/src/tests/mocks/` - Service mocks and test utilities

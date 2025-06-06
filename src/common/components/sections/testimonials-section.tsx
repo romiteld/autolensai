@@ -193,10 +193,11 @@ export const TestimonialsSection = ({ className = '' }: { className?: string }) 
           </div>
         </div>
 
-        {/* Additional Testimonials Grid */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <StaggeredReveal staggerDelay={0.1}>
-            {testimonials.slice(0, 3).map((testimonial, index) => (
+        {/* Additional Testimonials Grid - Centered Layout */}
+        <div className="mt-20 flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full">
+            <StaggeredReveal staggerDelay={0.1}>
+              {testimonials.slice(0, 3).map((testimonial, index) => (
               <EnhancedCard
                 key={index}
                 variant="glass"
@@ -234,8 +235,9 @@ export const TestimonialsSection = ({ className = '' }: { className?: string }) 
                   </div>
                 </EnhancedCardContent>
               </EnhancedCard>
-            ))}
-          </StaggeredReveal>
+              ))}
+            </StaggeredReveal>
+          </div>
         </div>
       </div>
     </section>

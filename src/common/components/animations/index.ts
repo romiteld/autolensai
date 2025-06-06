@@ -20,3 +20,11 @@ export {
   HeroBackground3D,
   InteractiveCarCard
 } from './3d-effects';
+export { 
+  FluidBackground, 
+  FluidCard, 
+  FluidButton, 
+  FluidProgress 
+} from './fluid-motion';
+export { LiquidFilters, LiquidShape } from './liquid-filters';
+export { AutomotiveFluidBackground } from './automotive-background';

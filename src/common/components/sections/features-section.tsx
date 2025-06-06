@@ -163,20 +163,22 @@ export const FeaturesSection = ({ className = '' }: { className?: string }) => {
           </Reveal>
         </div>
 
-        {/* Statistics Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">
-          <StaggeredReveal staggerDelay={0.1}>
-            {statistics.map((stat, index) => (
-              <StatisticCard
-                key={index}
-                icon={stat.icon}
-                value={stat.value}
-                suffix={stat.suffix}
-                label={stat.label}
-                description={stat.description}
-              />
-            ))}
-          </StaggeredReveal>
+        {/* Statistics Grid - Centered Layout */}
+        <div className="flex justify-center mb-20">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl w-full">
+            <StaggeredReveal staggerDelay={0.1}>
+              {statistics.map((stat, index) => (
+                <StatisticCard
+                  key={index}
+                  icon={stat.icon}
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  label={stat.label}
+                  description={stat.description}
+                />
+              ))}
+            </StaggeredReveal>
+          </div>
         </div>
 
         {/* 3D Vehicle Showcase */}
@@ -186,75 +188,130 @@ export const FeaturesSection = ({ className = '' }: { className?: string }) => {
           </div>
         </Reveal>
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-          <StaggeredReveal staggerDelay={0.1}>
-            {features.map((feature, index) => (
-              <EnhancedCard
-                key={index}
-                variant="glass"
-                tilt
-                floating={index % 2 === 0}
-                className="h-full"
-              >
-                <EnhancedCardHeader>
-                  <motion.div
-                    className={`p-3 rounded-xl bg-gradient-to-br ${feature.gradient} w-fit mb-4`}
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        {/* Features Grid - Improved Layout */}
+        <div className="mb-20">
+          {/* Two-Column Layout for Better Distribution */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            {/* Left Column - Primary Features */}
+            <div className="space-y-8">
+              <StaggeredReveal staggerDelay={0.1}>
+                {features.slice(0, 3).map((feature, index) => (
+                  <EnhancedCard
+                    key={index}
+                    variant="glass"
+                    tilt
+                    floating={index % 2 === 0}
+                    className="h-full"
                   >
-                    {feature.icon}
-                  </motion.div>
-                  <EnhancedCardTitle className="text-white">
-                    {feature.title}
-                  </EnhancedCardTitle>
-                  <EnhancedCardDescription className="text-gray-300">
-                    {feature.description}
-                  </EnhancedCardDescription>
-                </EnhancedCardHeader>
-                <EnhancedCardContent>
-                  <ul className="space-y-2">
-                    {feature.benefits.map((benefit, benefitIndex) => (
-                      <motion.li
-                        key={benefitIndex}
-                        className="flex items-center text-sm text-gray-400"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={isInView ? { opacity: 1, x: 0 } : {}}
-                        transition={{ delay: 0.5 + benefitIndex * 0.1 }}
+                    <EnhancedCardHeader>
+                      <motion.div
+                        className={`p-3 rounded-xl bg-gradient-to-br ${feature.gradient} w-fit mb-4`}
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
                       >
-                        <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-3" />
-                        {benefit}
-                      </motion.li>
-                    ))}
-                  </ul>
-                </EnhancedCardContent>
-              </EnhancedCard>
-            ))}
-          </StaggeredReveal>
+                        {feature.icon}
+                      </motion.div>
+                      <EnhancedCardTitle className="text-white">
+                        {feature.title}
+                      </EnhancedCardTitle>
+                      <EnhancedCardDescription className="text-gray-300">
+                        {feature.description}
+                      </EnhancedCardDescription>
+                    </EnhancedCardHeader>
+                    <EnhancedCardContent>
+                      <ul className="space-y-2">
+                        {feature.benefits.map((benefit, benefitIndex) => (
+                          <motion.li
+                            key={benefitIndex}
+                            className="flex items-center text-sm text-gray-400"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : {}}
+                            transition={{ delay: 0.5 + benefitIndex * 0.1 }}
+                          >
+                            <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-3" />
+                            {benefit}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </EnhancedCardContent>
+                  </EnhancedCard>
+                ))}
+              </StaggeredReveal>
+            </div>
+            
+            {/* Right Column - Secondary Features */}
+            <div className="space-y-8">
+              <StaggeredReveal staggerDelay={0.2}>
+                {features.slice(3, 6).map((feature, index) => (
+                  <EnhancedCard
+                    key={index + 3}
+                    variant="glass"
+                    tilt
+                    floating={(index + 1) % 2 === 0}
+                    className="h-full"
+                  >
+                    <EnhancedCardHeader>
+                      <motion.div
+                        className={`p-3 rounded-xl bg-gradient-to-br ${feature.gradient} w-fit mb-4`}
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                      >
+                        {feature.icon}
+                      </motion.div>
+                      <EnhancedCardTitle className="text-white">
+                        {feature.title}
+                      </EnhancedCardTitle>
+                      <EnhancedCardDescription className="text-gray-300">
+                        {feature.description}
+                      </EnhancedCardDescription>
+                    </EnhancedCardHeader>
+                    <EnhancedCardContent>
+                      <ul className="space-y-2">
+                        {feature.benefits.map((benefit, benefitIndex) => (
+                          <motion.li
+                            key={benefitIndex}
+                            className="flex items-center text-sm text-gray-400"
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : {}}
+                            transition={{ delay: 0.5 + benefitIndex * 0.1 }}
+                          >
+                            <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mr-3" />
+                            {benefit}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </EnhancedCardContent>
+                  </EnhancedCard>
+                ))}
+              </StaggeredReveal>
+            </div>
+          </div>
         </div>
 
-        {/* Interactive Car Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <StaggeredReveal staggerDelay={0.2}>
-            <InteractiveCarCard
-              title="2023 Tesla Model S"
-              description="Luxury electric sedan with autopilot"
-              price="$89,990"
-              className="h-full"
-            />
-            <InteractiveCarCard
-              title="2022 BMW M3"
-              description="High-performance sports sedan"
-              price="$72,800"
-              className="h-full"
-            />
-            <InteractiveCarCard
-              title="2024 Audi Q8"
-              description="Premium luxury SUV"
-              price="$68,900"
-              className="h-full"
-            />
-          </StaggeredReveal>
+        {/* Interactive Car Cards - Centered Layout */}
+        <div className="flex justify-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
+            <StaggeredReveal staggerDelay={0.2}>
+              <InteractiveCarCard
+                title="2023 Tesla Model S"
+                description="Luxury electric sedan with autopilot"
+                price="$89,990"
+                className="h-full"
+              />
+              <InteractiveCarCard
+                title="2022 BMW M3"
+                description="High-performance sports sedan"
+                price="$72,800"
+                className="h-full"
+              />
+              <InteractiveCarCard
+                title="2024 Audi Q8"
+                description="Premium luxury SUV"
+                price="$68,900"
+                className="h-full"
+              />
+            </StaggeredReveal>
+          </div>
         </div>
       </div>
     </section>

@@ -115,7 +115,7 @@ export default function DashboardLayout({
   const isActive = (href: string) => pathname === href;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900">
+    <div className="flex h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900">
       {/* Mobile sidebar overlay */}
       <AnimatePresence>
         {sidebarOpen && (
@@ -132,7 +132,7 @@ export default function DashboardLayout({
       {/* Sidebar */}
       <motion.div 
         className={`
-          fixed inset-y-0 left-0 z-50 w-80 bg-black/90 backdrop-blur-xl border-r border-white/10 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0
+          fixed inset-y-0 left-0 z-50 w-80 bg-black/90 backdrop-blur-xl border-r border-white/10 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:w-80 lg:flex-shrink-0
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
         style={{
@@ -288,7 +288,7 @@ export default function DashboardLayout({
       </motion.div>
 
       {/* Main content */}
-      <div className="lg:pl-80 flex flex-col flex-1">
+      <div className="flex flex-col flex-1 min-w-0">
         {/* Top bar */}
         <div className="sticky top-0 z-30 bg-black/20 backdrop-blur-xl border-b border-white/10">
           <div className="flex items-center justify-between h-16 px-6">
@@ -311,7 +311,7 @@ export default function DashboardLayout({
         </div>
 
         {/* Page content */}
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-2 sm:p-4 overflow-hidden flex flex-col">
           {children}
         </main>
       </div>

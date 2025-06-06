@@ -7,6 +7,7 @@ import { EnhancedButton } from '@/common/components/ui/enhanced-button';
 import { TextReveal, TypewriterText } from '@/common/components/animations/text-effects';
 import { HeroBackground3D } from '@/common/components/animations/3d-effects';
 import { ParticleField, AnimatedGradient } from '@/common/components/animations/floating-elements';
+import { AutomotiveFluidBackground } from '@/common/components/animations/automotive-background';
 import { Magnetic } from '@/common/components/animations/magnetic';
 
 interface HeroSectionProps {
@@ -31,19 +32,21 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
       className={`relative min-h-screen flex items-center justify-center overflow-hidden ${className}`}
       style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
     >
-      {/* Animated Background */}
+      {/* Enhanced Automotive Background */}
       <div className="absolute inset-0">
-        <AnimatedGradient className="opacity-30" />
-        <HeroBackground3D className="opacity-20" />
-        <ParticleField count={100} />
+        <AutomotiveFluidBackground />
+        <AnimatedGradient className="opacity-20" />
+        <HeroBackground3D className="opacity-15" />
+        <ParticleField count={80} />
       </div>
 
       {/* Radial Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-radial from-transparent via-black/50 to-black/80" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
+          className="w-full flex flex-col items-center justify-center min-h-[80vh] py-8 sm:py-12"
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -63,10 +66,10 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
           </motion.div>
 
           {/* Main Heading */}
-          <motion.div className="mb-8">
+          <motion.div className="mb-8 w-full max-w-5xl mx-auto px-4 sm:px-6">
             <TextReveal
               text="Transform Your Car Selling Experience"
-              className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent leading-tight"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent leading-tight text-center"
               duration={0.8}
               stagger={0.03}
             />
@@ -74,14 +77,14 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
 
           {/* Subheading with Typewriter Effect */}
           <motion.div
-            className="mb-12 max-w-3xl mx-auto"
+            className="mb-12 w-full max-w-2xl mx-auto px-8 sm:px-12 lg:px-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}
           >
             <TypewriterText
               text="Professional AI background removal, compelling descriptions, and automated marketing campaigns that sell cars 3x faster."
-              className="text-xl md:text-2xl text-gray-300 leading-relaxed"
+              className="text-lg sm:text-xl lg:text-2xl text-gray-300 leading-relaxed text-center"
               delay={1.5}
               speed={30}
             />
@@ -89,7 +92,7 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
 
           {/* CTA Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16"
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 mt-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2, duration: 0.8 }}
@@ -162,7 +165,7 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
 
           {/* Trust Indicators */}
           <motion.div
-            className="flex flex-wrap justify-center items-center gap-8 text-gray-400"
+            className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 lg:gap-8 text-gray-400 px-4 sm:px-6"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.5, duration: 1 }}
@@ -177,17 +180,9 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
             </div>
             <div className="flex items-center gap-2">
               <motion.div
-                className="w-3 h-3 bg-blue-400 rounded-full"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-              />
-              <span className="text-sm">5000+ Cars Processed</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <motion.div
                 className="w-3 h-3 bg-purple-400 rounded-full"
                 animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+                transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
               />
               <span className="text-sm">AI-Powered Quality</span>
             </div>
@@ -196,13 +191,13 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
 
         {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 3, duration: 1 }}
         >
           <motion.div
-            className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
+            className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center mb-3"
             whileHover={{ scale: 1.1 }}
           >
             <motion.div
@@ -211,7 +206,7 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
               transition={{ duration: 1.5, repeat: Infinity }}
             />
           </motion.div>
-          <p className="text-xs text-gray-400 mt-2">Scroll to explore</p>
+          <p className="text-xs text-gray-400 text-center whitespace-nowrap">Scroll to explore</p>
         </motion.div>
       </div>
 
