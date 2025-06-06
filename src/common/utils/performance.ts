@@ -6,14 +6,23 @@
 // Performance monitoring
 export class PerformanceMonitor {
   private frameCount = 0;
-  private lastTime = performance.now();
+  private lastTime = 0;
   private fps = 60;
   
   constructor() {
-    this.measureFPS();
+    // Only initialize on client side
+    if (typeof window !== 'undefined') {
+      this.lastTime = performance.now();
+      this.measureFPS();
+    }
   }
   
   private measureFPS() {
+    // Check if we're in a browser environment
+    if (typeof window === 'undefined' || typeof requestAnimationFrame === 'undefined') {
+      return;
+    }
+    
     const measure = (currentTime: number) => {
       this.frameCount++;
       const delta = currentTime - this.lastTime;
@@ -34,6 +43,11 @@ export class PerformanceMonitor {
   }
   
   private adjustAnimationQuality() {
+    // Check if we're in a browser environment
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return;
+    }
+    
     const root = document.documentElement;
     
     if (this.fps < 30) {
@@ -206,6 +220,11 @@ export const cleanupAnimations = (container: HTMLElement) => {
 
 // Preload critical resources
 export const preloadCriticalResources = () => {
+  // Only run on client side
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return;
+  }
+  
   // Preload critical fonts
   const fontPreloads = [
     'Geist Sans',
@@ -238,6 +257,11 @@ export const preloadCriticalResources = () => {
 
 // Accessibility helpers
 export const respectReducedMotion = () => {
+  // Only run on client side
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return;
+  }
+  
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   
   const updateMotionPreference = (mediaQuery: MediaQueryListEvent | MediaQueryList) => {
@@ -258,6 +282,11 @@ export const respectReducedMotion = () => {
 
 // High contrast mode support
 export const respectHighContrast = () => {
+  // Only run on client side
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return;
+  }
+  
   const prefersHighContrast = window.matchMedia('(prefers-contrast: high)');
   
   const updateContrastPreference = (mediaQuery: MediaQueryListEvent | MediaQueryList) => {
@@ -274,6 +303,11 @@ export const respectHighContrast = () => {
 
 // Initialize performance optimizations
 export const initializePerformanceOptimizations = () => {
+  // Only run on client side
+  if (typeof window === 'undefined') {
+    return;
+  }
+  
   // Start performance monitoring
   new PerformanceMonitor();
   
@@ -285,20 +319,51 @@ export const initializePerformanceOptimizations = () => {
   preloadCriticalResources();
   
   // Add global performance classes
-  document.body.classList.add('gpu-accelerated');
+  if (typeof document !== 'undefined') {
+    document.body.classList.add('gpu-accelerated');
+  }
   
   // Setup global error handling for animations
   window.addEventListener('error', (event) => {
     if (event.error && event.error.message.includes('animation')) {
       console.warn('Animation error detected, falling back to reduced animations');
-      document.body.classList.add('low-performance');
+      if (typeof document !== 'undefined') {
+        document.body.classList.add('low-performance');
+      }
     }
   });
   
   console.log('🚀 AutoLensAI Performance Optimizations Initialized');
 };
 
-// Export singleton instances
-export const performanceMonitor = new PerformanceMonitor();
-export const lazyAnimationObserver = new LazyAnimationObserver();
-export const animationFrameManager = new AnimationFrameManager();
+// Lazy singleton instances (only create on client side when needed)
+let _performanceMonitor: PerformanceMonitor | null = null;
+let _lazyAnimationObserver: LazyAnimationObserver | null = null;
+let _animationFrameManager: AnimationFrameManager | null = null;
+
+export const getPerformanceMonitor = (): PerformanceMonitor | null => {
+  if (typeof window === 'undefined') return null;
+  if (!_performanceMonitor) {
+    _performanceMonitor = new PerformanceMonitor();
+  }
+  return _performanceMonitor;
+};
+
+export const getLazyAnimationObserver = (): LazyAnimationObserver | null => {
+  if (typeof window === 'undefined') return null;
+  if (!_lazyAnimationObserver) {
+    _lazyAnimationObserver = new LazyAnimationObserver();
+  }
+  return _lazyAnimationObserver;
+};
+
+export const getAnimationFrameManager = (): AnimationFrameManager | null => {
+  if (typeof window === 'undefined') return null;
+  if (!_animationFrameManager) {
+    _animationFrameManager = new AnimationFrameManager();
+  }
+  return _animationFrameManager;
+};
+
+// Note: Use getPerformanceMonitor(), getLazyAnimationObserver(), getAnimationFrameManager() 
+// instead of direct imports to avoid SSR issues
