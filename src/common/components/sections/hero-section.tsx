@@ -8,6 +8,8 @@ import { TextReveal, TypewriterText } from '@/common/components/animations/text-
 import { HeroBackground3D } from '@/common/components/animations/3d-effects';
 import { ParticleField, AnimatedGradient } from '@/common/components/animations/floating-elements';
 import { AutomotiveFluidBackground } from '@/common/components/animations/automotive-background';
+import { AnimationCanvas } from '@/common/components/animations/lava-canvas';
+import { ProceduralLavaBackground } from '@/common/components/animations/procedural-lava';
 import { Magnetic } from '@/common/components/animations/magnetic';
 
 interface HeroSectionProps {
@@ -32,8 +34,21 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
       className={`relative min-h-screen flex items-center justify-center overflow-hidden ${className}`}
       style={{ y: heroY, opacity: heroOpacity, scale: heroScale }}
     >
-      {/* Enhanced Automotive Background */}
+      {/* Enhanced Automotive Background with Procedural Mesh Animation */}
       <div className="absolute inset-0">
+        {/* Procedural mesh lava background - deepest layer */}
+        {/* Option 1: Shader-based lava animation (current) */}
+        <AnimationCanvas />
+        
+        {/* Option 2: BufferGeometry-based procedural mesh with Perlin noise (new implementation) */}
+        {/* Uncomment to use the new procedural lava mesh instead of shader version: */}
+        {/* <ProceduralLavaBackground 
+          className="opacity-40" 
+          intensity="medium" 
+          showMultipleLayers={true} 
+        /> */}
+        
+        {/* Main automotive background layers */}
         <AutomotiveFluidBackground />
         <AnimatedGradient className="opacity-20" />
         <HeroBackground3D className="opacity-15" />
@@ -51,18 +66,22 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          {/* Floating Badge */}
+          {/* Floating Badge - Left aligned */}
           <motion.div
-            className="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/20 border border-blue-500/30 backdrop-blur-sm mb-8"
+            className="w-full max-w-6xl mx-auto px-0 sm:px-1 lg:px-2 mb-8"
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
-            whileHover={{ scale: 1.05 }}
           >
-            <span className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse" />
-            <span className="text-sm text-blue-200 font-medium">
-              AI-Powered Car Marketplace • Now Live
-            </span>
+            <motion.div
+              className="inline-flex items-center px-4 py-2 rounded-full bg-blue-500/20 border border-blue-500/30 backdrop-blur-sm"
+              whileHover={{ scale: 1.05 }}
+            >
+              <span className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse" />
+              <span className="text-sm text-blue-200 font-medium">
+                AI-Powered Car Marketplace • Now Live
+              </span>
+            </motion.div>
           </motion.div>
 
           {/* Main Heading */}
@@ -77,14 +96,14 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
 
           {/* Subheading with Typewriter Effect */}
           <motion.div
-            className="mb-12 w-full max-w-5xl mx-auto px-1 sm:px-2 lg:px-4"
+            className="mb-12 w-full max-w-7xl mx-auto px-0"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}
           >
             <TypewriterText
               text="Professional AI background removal, compelling descriptions, and automated marketing campaigns that sell cars 3x faster."
-              className="text-lg sm:text-xl lg:text-2xl text-gray-300 leading-relaxed text-center"
+              className="text-lg sm:text-xl lg:text-2xl text-gray-300 leading-relaxed text-left ml-4 sm:ml-8 lg:ml-12"
               delay={1.5}
               speed={30}
             />

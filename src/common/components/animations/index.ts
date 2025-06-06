@@ -28,3 +28,5 @@ export {
 } from './fluid-motion';
 export { LiquidFilters, LiquidShape } from './liquid-filters';
 export { AutomotiveFluidBackground } from './automotive-background';
+export { LavaBackground } from './lava-background';
+export { ProceduralLava, ProceduralLavaBackground, MeshAnim } from './procedural-lava';
