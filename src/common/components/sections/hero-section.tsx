@@ -77,7 +77,7 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
 
           {/* Subheading with Typewriter Effect */}
           <motion.div
-            className="mb-12 w-full max-w-2xl mx-auto px-8 sm:px-12 lg:px-16"
+            className="mb-12 w-full max-w-5xl mx-auto px-1 sm:px-2 lg:px-4"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1, duration: 0.8 }}
@@ -191,7 +191,7 @@ export const HeroSection = ({ isAuthenticated, className = '' }: HeroSectionProp
 
         {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+          className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 3, duration: 1 }}

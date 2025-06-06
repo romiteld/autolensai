@@ -9,12 +9,13 @@ import { env } from '@/core/config/env';
 const redis = new Redis(env.get('REDIS_URL') || 'redis://localhost:6379');
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export async function GET(request: NextRequest, { params }: RouteParams) {
+export async function GET(request: NextRequest, context: RouteParams) {
+  const params = await context.params;
   try {
     const { id } = params;
     
