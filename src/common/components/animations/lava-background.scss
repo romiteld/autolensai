@@ -1,0 +1,267 @@
+// Lava Background SCSS - Optimized for Performance and Visual Impact
+.lava-background {
+  // Base container optimizations
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2; // Behind automotive background (-1) and content
+  pointer-events: none;
+  overflow: hidden;
+  
+  // Performance optimizations
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0); // Force hardware acceleration
+  backface-visibility: hidden;
+  perspective: 1000px;
+  
+  // Visual integration
+  opacity: 0.4; // Subtle presence to complement automotive theme
+  mix-blend-mode: soft-light; // Seamless blending with existing gradients
+  
+  // Responsive behavior
+  @media (max-width: 768px) {
+    opacity: 0.25; // Reduced on mobile for performance
+  }
+  
+  @media (max-width: 480px) {
+    opacity: 0.15; // Minimal on small screens
+  }
+  
+  // High contrast preference support
+  @media (prefers-reduced-motion: reduce) {
+    .lava-blob,
+    .lava-stream {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+}
+
+// Lava blob base styles with performance optimization
+.lava-blob {
+  position: absolute;
+  border-radius: 50%;
+  
+  // Performance critical properties
+  will-change: transform, filter;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  
+  // GPU acceleration hints
+  contain: layout style paint;
+  isolation: isolate;
+  
+  // Prevent layout shifts
+  max-width: 100vw;
+  max-height: 100vh;
+  
+  // Mobile optimizations
+  @media (max-width: 768px) {
+    filter: blur(60px) !important; // Reduced blur for performance
+  }
+  
+  @media (max-width: 480px) {
+    filter: blur(40px) !important;
+    opacity: 0.7;
+  }
+}
+
+// Specific blob styling for visual hierarchy
+.lava-blob-1 {
+  // Primary lava blob - most prominent
+  background: radial-gradient(
+    circle,
+    rgba(255, 69, 0, 0.8) 0%,
+    rgba(255, 140, 0, 0.6) 30%,
+    rgba(255, 165, 0, 0.4) 60%,
+    transparent 80%
+  );
+  filter: blur(120px);
+  
+  @media (max-width: 768px) {
+    width: 800px !important;
+    height: 800px !important;
+  }
+  
+  @media (max-width: 480px) {
+    width: 500px !important;
+    height: 500px !important;
+  }
+}
+
+.lava-blob-2 {
+  // Secondary blob - crimson accent
+  background: radial-gradient(
+    circle,
+    rgba(220, 20, 60, 0.7) 0%,
+    rgba(255, 69, 0, 0.5) 40%,
+    rgba(255, 140, 0, 0.3) 70%,
+    transparent 85%
+  );
+  filter: blur(140px);
+  
+  @media (max-width: 768px) {
+    width: 600px !important;
+    height: 600px !important;
+  }
+  
+  @media (max-width: 480px) {
+    width: 400px !important;
+    height: 400px !important;
+  }
+}
+
+.lava-blob-3 {
+  // Tertiary blob - orange gradient
+  background: radial-gradient(
+    circle,
+    rgba(255, 99, 71, 0.6) 0%,
+    rgba(255, 140, 0, 0.4) 50%,
+    rgba(255, 215, 0, 0.2) 75%,
+    transparent 90%
+  );
+  filter: blur(160px);
+  
+  @media (max-width: 768px) {
+    width: 700px !important;
+    height: 700px !important;
+  }
+  
+  @media (max-width: 480px) {
+    width: 450px !important;
+    height: 450px !important;
+  }
+}
+
+.lava-blob-4 {
+  // Quaternary blob - deep red
+  background: radial-gradient(
+    circle,
+    rgba(178, 34, 34, 0.5) 0%,
+    rgba(255, 69, 0, 0.3) 60%,
+    transparent 85%
+  );
+  filter: blur(100px);
+  
+  @media (max-width: 768px) {
+    width: 500px !important;
+    height: 500px !important;
+  }
+  
+  @media (max-width: 480px) {
+    width: 350px !important;
+    height: 350px !important;
+  }
+}
+
+// Accent blobs for subtle detail
+.lava-accent-1,
+.lava-accent-2 {
+  @media (max-width: 768px) {
+    width: 300px !important;
+    height: 300px !important;
+    opacity: 0.6;
+  }
+  
+  @media (max-width: 480px) {
+    display: none; // Hide accent blobs on small screens
+  }
+}
+
+// Flowing lava streams
+.lava-stream {
+  position: absolute;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  
+  @media (max-width: 768px) {
+    height: 150px !important;
+    filter: blur(40px) !important;
+  }
+  
+  @media (max-width: 480px) {
+    height: 100px !important;
+    filter: blur(30px) !important;
+    opacity: 0.5;
+  }
+}
+
+// Heat distortion overlay
+.heat-distortion {
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  
+  // Disable on low-end devices
+  @media (max-width: 480px) {
+    display: none;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+
+// Dark mode adjustments
+@media (prefers-color-scheme: dark) {
+  .lava-background {
+    opacity: 0.5; // Slightly more visible in dark mode
+  }
+}
+
+// High contrast mode adjustments
+@media (prefers-contrast: high) {
+  .lava-background {
+    opacity: 0.2; // Reduced for accessibility
+  }
+}
+
+// Print media - hide completely
+@media print {
+  .lava-background {
+    display: none;
+  }
+}
+
+// Performance hint classes for dynamic adjustment
+.lava-background.performance-optimized {
+  .lava-blob {
+    filter: blur(60px) !important;
+  }
+  
+  .lava-stream {
+    filter: blur(30px) !important;
+  }
+  
+  .heat-distortion {
+    display: none;
+  }
+}
+
+// Integration with AutoLensAI theme
+.lava-background.automotive-theme {
+  // Blend with automotive color palette
+  .lava-blob-1 {
+    background: radial-gradient(
+      circle,
+      rgba(255, 69, 0, 0.6) 0%,
+      rgba(14, 165, 233, 0.3) 50%,
+      transparent 80%
+    ) !important;
+  }
+  
+  .lava-blob-2 {
+    background: radial-gradient(
+      circle,
+      rgba(220, 20, 60, 0.5) 0%,
+      rgba(239, 68, 68, 0.3) 40%,
+      transparent 70%
+    ) !important;
+  }
+}

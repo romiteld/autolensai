@@ -94,12 +94,12 @@ export default function Home() {
                 </Link>
               </Magnetic>
               
-              <nav className="hidden md:flex items-center space-x-8">
+              <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 absolute left-1/2 transform -translate-x-1/2">
                 {['Features', 'Pricing', 'About', 'Contact'].map((item) => (
                   <Magnetic key={item} strength={10} range={50}>
                     <Link href={`#${item.toLowerCase()}`}>
                       <motion.span
-                        className="text-gray-300 hover:text-white transition-colors duration-300 font-medium"
+                        className="text-gray-300 hover:text-white transition-colors duration-300 font-medium text-sm lg:text-base"
                         whileHover={{ y: -2 }}
                       >
                         {item}
