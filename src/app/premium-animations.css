@@ -1,0 +1,337 @@
+/* Premium Animations and Visual Effects for AutoLensAI */
+
+/* Radial gradient utilities */
+.bg-gradient-radial {
+  background-image: radial-gradient(ellipse at center, var(--tw-gradient-stops));
+}
+
+/* Advanced glow effects */
+.glow-blue {
+  box-shadow: 
+    0 0 20px rgba(59, 130, 246, 0.3),
+    0 0 40px rgba(59, 130, 246, 0.2),
+    0 0 80px rgba(59, 130, 246, 0.1);
+}
+
+.glow-purple {
+  box-shadow: 
+    0 0 20px rgba(139, 92, 246, 0.3),
+    0 0 40px rgba(139, 92, 246, 0.2),
+    0 0 80px rgba(139, 92, 246, 0.1);
+}
+
+.glow-premium {
+  box-shadow: 
+    0 0 20px rgba(251, 191, 36, 0.3),
+    0 0 40px rgba(251, 191, 36, 0.2),
+    0 0 80px rgba(251, 191, 36, 0.1);
+}
+
+/* Advanced hover effects */
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hover-lift:hover {
+  transform: translateY(-10px) scale(1.02);
+  filter: brightness(1.1);
+}
+
+/* Morphing gradient backgrounds */
+@keyframes morphing-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.morphing-gradient {
+  background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #06b6d4, #10b981);
+  background-size: 400% 400%;
+  animation: morphing-gradient 8s ease-in-out infinite;
+}
+
+/* Advanced particle effects */
+@keyframes float-up {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(50px) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0px) scale(0);
+  }
+}
+
+.particle {
+  animation: float-up 4s linear infinite;
+}
+
+/* Advanced text effects */
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Premium button effects */
+.btn-premium {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(45deg, #f59e0b, #eab308, #f59e0b);
+  background-size: 200% 200%;
+  animation: btn-gradient 3s ease-in-out infinite;
+}
+
+.btn-premium::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: btn-shine 2s infinite;
+}
+
+@keyframes btn-gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes btn-shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Advanced glass morphism */
+.glass-ultra {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 8px 32px 0 rgba(31, 38, 135, 0.37),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Ambient lighting effects */
+.ambient-glow {
+  position: relative;
+}
+
+.ambient-glow::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(59, 130, 246, 0.1) 0%,
+    transparent 70%
+  );
+  z-index: -1;
+  animation: ambient-pulse 4s ease-in-out infinite;
+}
+
+@keyframes ambient-pulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+/* Advanced scroll indicators */
+.scroll-indicator {
+  position: relative;
+}
+
+.scroll-indicator::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 30px;
+  background: linear-gradient(
+    to bottom,
+    rgba(59, 130, 246, 0.8),
+    transparent
+  );
+  transform: translateX(-50%);
+  animation: scroll-bounce 2s infinite;
+}
+
+@keyframes scroll-bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  40% {
+    transform: translateX(-50%) translateY(-10px);
+  }
+  60% {
+    transform: translateX(-50%) translateY(-5px);
+  }
+}
+
+/* Performance optimization utilities */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.gpu-acceleration {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .morphing-gradient {
+    animation: none;
+    background: #3b82f6;
+  }
+  
+  .particle {
+    animation: none;
+    opacity: 0.3;
+  }
+  
+  .text-shimmer {
+    animation: none;
+  }
+  
+  .btn-premium {
+    animation: none;
+  }
+  
+  .btn-premium::before {
+    animation: none;
+  }
+  
+  .ambient-glow::before {
+    animation: none;
+    opacity: 0.3;
+  }
+  
+  .scroll-indicator::after {
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .glass-ultra {
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid white;
+  }
+  
+  .glow-blue,
+  .glow-purple,
+  .glow-premium {
+    box-shadow: none;
+    border: 2px solid currentColor;
+  }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+  .ambient-glow::before {
+    background: radial-gradient(
+      circle at center,
+      rgba(59, 130, 246, 0.15) 0%,
+      transparent 70%
+    );
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .glow-blue,
+  .glow-purple,
+  .glow-premium {
+    box-shadow: 
+      0 0 10px rgba(59, 130, 246, 0.2),
+      0 0 20px rgba(59, 130, 246, 0.1);
+  }
+  
+  .morphing-gradient {
+    animation-duration: 12s;
+  }
+  
+  .particle {
+    animation-duration: 6s;
+  }
+}
+
+/* Print styles */
+@media print {
+  .morphing-gradient,
+  .particle,
+  .text-shimmer,
+  .btn-premium,
+  .ambient-glow {
+    animation: none !important;
+    background: #3b82f6 !important;
+  }
+  
+  .glow-blue,
+  .glow-purple,
+  .glow-premium {
+    box-shadow: none !important;
+  }
+}
