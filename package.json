@@ -22,9 +22,7 @@
     "deploy:production": "vercel --prod --env .env.production",
     "db:migrate": "supabase db push",
     "db:reset": "supabase db reset",
-    "db:seed": "tsx scripts/seed.ts",
-    "postbuild": "next-sitemap",
-    "prepare": "husky install"
+    "db:seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
