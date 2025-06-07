@@ -183,7 +183,7 @@ export class ImageOptimizationService {
     vehicleFolder: string,
     useCase: 'web' | 'mobile' | 'print' | 'social' | 'email'
   ): Promise<OptimizationResult> {
-    const useCaseConfigs = {
+    const useCaseConfigs: Record<'web' | 'mobile' | 'print' | 'social' | 'email', OptimizationOptions> = {
       web: {
         maxWidth: 1920,
         maxHeight: 1080,
