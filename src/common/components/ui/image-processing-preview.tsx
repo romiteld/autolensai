@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { CloudinaryService } from '@/ai/services/cloudinary.service';
+import { CloudinaryClientService } from '@/ai/services/cloudinary-client.service';
 import { ComparisonSlider, AdvancedComparison } from './comparison-slider';
 import { Button, Card, CardContent, CardHeader, CardTitle } from '@/common/components/ui';
 import { 
