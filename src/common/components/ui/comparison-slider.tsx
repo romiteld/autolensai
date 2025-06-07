@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
-import { CloudinaryService } from '@/ai/services/cloudinary.service';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { CloudinaryClientService } from '@/ai/services/cloudinary-client.service';
 
 interface ComparisonSliderProps {
   publicId: string;
@@ -22,7 +22,7 @@ export default function ComparisonSlider({
   const [afterUrl, setAfterUrl] = useState<string>('');
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const cloudinaryService = new CloudinaryService();
+  const cloudinaryService = new CloudinaryClientService();
 
   // Initialize URLs
   React.useEffect(() => {
@@ -162,7 +162,7 @@ export function AdvancedComparison({
 }: AdvancedComparisonProps) {
   const [selectedOption, setSelectedOption] = useState(0);
   const [urls, setUrls] = useState<string[]>([]);
-  const cloudinaryService = new CloudinaryService();
+  const cloudinaryService = new CloudinaryClientService();
 
   React.useEffect(() => {
     const generateUrls = async () => {

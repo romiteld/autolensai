@@ -1,3 +1,5 @@
+'use server';
+
 import { v2 as cloudinary, TransformationOptions } from 'cloudinary';
 import { env } from '@/core/config/env';
 
