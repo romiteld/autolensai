@@ -49,15 +49,34 @@ export async function GET(
       );
     }
 
-    // Generate optimized URLs for different sizes
+    // Generate optimized URLs for different sizes and AI processing options
     let optimizedUrls = {};
+    let aiProcessingUrls = {};
+    let responsiveBreakpoints = {};
+    
     if (image.cloudinary_public_id) {
+      // Standard responsive sizes
+      responsiveBreakpoints = await cloudinaryService.generateResponsiveBreakpoints(image.cloudinary_public_id);
+      
       optimizedUrls = {
         thumbnail: await cloudinaryService.createThumbnail(image.cloudinary_public_id, 300, 200),
         medium: cloudinaryService.generateOptimizedUrl(image.cloudinary_public_id, { width: 800, height: 600 }),
         large: cloudinaryService.generateOptimizedUrl(image.cloudinary_public_id, { width: 1200, height: 900 }),
         original: image.processed_url || image.original_url,
       };
+      
+      // AI processing options
+      aiProcessingUrls = {
+        backgroundRemoved: await cloudinaryService.removeBackgroundWithAI(image.cloudinary_public_id),
+        enhanced: await cloudinaryService.enhanceVehicleWithAI(image.cloudinary_public_id, true),
+        showroomBackground: await cloudinaryService.generativeFillBackground(image.cloudinary_public_id),
+        branded: await cloudinaryService.applyBrandOverlay(image.cloudinary_public_id),
+        optimized: await cloudinaryService.optimizeDelivery(image.cloudinary_public_id)
+      };
+      
+      // Before/after comparison URLs
+      const beforeAfterUrls = await cloudinaryService.generateBeforeAfterUrls(image.cloudinary_public_id);
+      aiProcessingUrls.beforeAfter = beforeAfterUrls;
     }
 
     return NextResponse.json({
@@ -65,6 +84,14 @@ export async function GET(
         ...image,
         url: image.processed_url || image.original_url,
         optimizedUrls,
+        aiProcessingUrls,
+        responsiveBreakpoints,
+        // Additional metadata for frontend
+        processing: {
+          hasCloudinaryId: !!image.cloudinary_public_id,
+          canProcess: !!image.cloudinary_public_id,
+          status: image.processing_status || 'ready'
+        }
       },
     });
 

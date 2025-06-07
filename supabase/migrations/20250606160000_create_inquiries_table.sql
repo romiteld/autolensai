@@ -1,7 +1,7 @@
 -- Create inquiries table for vehicle contact forms
-CREATE TABLE IF NOT EXISTS autolensai.inquiries (
+CREATE TABLE IF NOT EXISTS public.inquiries (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    vehicle_id UUID NOT NULL REFERENCES autolensai.vehicles(id) ON DELETE CASCADE,
+    vehicle_id UUID NOT NULL REFERENCES public.vehicles(id) ON DELETE CASCADE,
     seller_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
     inquirer_name TEXT NOT NULL,
     inquirer_email TEXT NOT NULL,
@@ -16,46 +16,38 @@ CREATE TABLE IF NOT EXISTS autolensai.inquiries (
 );
 
 -- Add indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_inquiries_vehicle_id ON autolensai.inquiries(vehicle_id);
-CREATE INDEX IF NOT EXISTS idx_inquiries_seller_id ON autolensai.inquiries(seller_id);
-CREATE INDEX IF NOT EXISTS idx_inquiries_status ON autolensai.inquiries(status);
-CREATE INDEX IF NOT EXISTS idx_inquiries_created_at ON autolensai.inquiries(created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_inquiries_inquiry_type ON autolensai.inquiries(inquiry_type);
+CREATE INDEX IF NOT EXISTS idx_inquiries_vehicle_id ON public.inquiries(vehicle_id);
+CREATE INDEX IF NOT EXISTS idx_inquiries_seller_id ON public.inquiries(seller_id);
+CREATE INDEX IF NOT EXISTS idx_inquiries_status ON public.inquiries(status);
+CREATE INDEX IF NOT EXISTS idx_inquiries_created_at ON public.inquiries(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_inquiries_inquiry_type ON public.inquiries(inquiry_type);
 
 -- Create trigger to update updated_at timestamp
-CREATE OR REPLACE FUNCTION autolensai.update_inquiries_updated_at()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = NOW();
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
 CREATE TRIGGER update_inquiries_updated_at
-    BEFORE UPDATE ON autolensai.inquiries
+    BEFORE UPDATE ON public.inquiries
     FOR EACH ROW
-    EXECUTE FUNCTION autolensai.update_inquiries_updated_at();
+    EXECUTE FUNCTION public.update_updated_at_column();
 
 -- Add RLS policies for inquiries
-ALTER TABLE autolensai.inquiries ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
 
 -- Sellers can view inquiries for their vehicles
-CREATE POLICY "sellers_can_view_their_inquiries" ON autolensai.inquiries
+CREATE POLICY "sellers_can_view_their_inquiries" ON public.inquiries
     FOR SELECT
     USING (seller_id = auth.uid());
 
 -- Sellers can update inquiries for their vehicles (to respond)
-CREATE POLICY "sellers_can_update_their_inquiries" ON autolensai.inquiries
+CREATE POLICY "sellers_can_update_their_inquiries" ON public.inquiries
     FOR UPDATE
     USING (seller_id = auth.uid());
 
 -- Anyone can create inquiries (for public vehicle listings)
-CREATE POLICY "anyone_can_create_inquiries" ON autolensai.inquiries
+CREATE POLICY "anyone_can_create_inquiries" ON public.inquiries
     FOR INSERT
     WITH CHECK (true);
 
 -- Create a view for inquiry statistics
-CREATE OR REPLACE VIEW autolensai.inquiry_stats AS
+CREATE OR REPLACE VIEW public.inquiry_stats AS
 SELECT 
     v.id as vehicle_id,
     v.make,
@@ -67,14 +59,14 @@ SELECT
     COUNT(CASE WHEN i.inquiry_type = 'test_drive' THEN 1 END) as test_drive_requests,
     COUNT(CASE WHEN i.inquiry_type = 'financing' THEN 1 END) as financing_inquiries,
     MAX(i.created_at) as latest_inquiry_at
-FROM autolensai.vehicles v
-LEFT JOIN autolensai.inquiries i ON v.id = i.vehicle_id
+FROM public.vehicles v
+LEFT JOIN public.inquiries i ON v.id = i.vehicle_id
 WHERE v.status = 'active'
 GROUP BY v.id, v.make, v.model, v.year;
 
 -- Grant permissions on the view
-GRANT SELECT ON autolensai.inquiry_stats TO authenticated;
+GRANT SELECT ON public.inquiry_stats TO authenticated;
 
 -- Add comment for documentation
-COMMENT ON TABLE autolensai.inquiries IS 'Stores inquiries from potential buyers for vehicle listings';
-COMMENT ON VIEW autolensai.inquiry_stats IS 'Provides inquiry statistics for vehicle listings';
+COMMENT ON TABLE public.inquiries IS 'Stores inquiries from potential buyers for vehicle listings';
+COMMENT ON VIEW public.inquiry_stats IS 'Provides inquiry statistics for vehicle listings';

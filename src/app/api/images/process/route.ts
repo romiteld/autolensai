@@ -7,12 +7,39 @@ import { z } from 'zod';
 
 const processSchema = z.object({
   imageId: z.string().uuid(),
-  operation: z.enum(['remove_background', 'enhance', 'create_thumbnail']),
+  operation: z.enum([
+    'remove_background', 
+    'enhance', 
+    'create_thumbnail',
+    'generative_fill',
+    'object_replace',
+    'add_watermark',
+    'add_pricing',
+    'generate_social_card',
+    'ai_enhance'
+  ]),
   async: z.boolean().optional().default(true),
   options: z.object({
     width: z.number().optional(),
     height: z.number().optional(),
     quality: z.string().optional(),
+    // Generative AI options
+    prompt: z.string().optional(),
+    hint: z.string().optional(),
+    // Object replacement
+    fromObject: z.string().optional(),
+    toObject: z.string().optional(),
+    // Text overlay
+    text: z.string().optional(),
+    fontSize: z.number().optional(),
+    textColor: z.string().optional(),
+    // Vehicle info for social cards
+    vehicleInfo: z.object({
+      make: z.string(),
+      model: z.string(),
+      year: z.number(),
+      price: z.string()
+    }).optional(),
   }).optional(),
 });
 
@@ -94,10 +121,18 @@ export async function POST(request: NextRequest) {
       
       switch (validatedData.operation) {
         case 'remove_background':
-          result = await cloudinaryService.removeBackground(
-            sourceUrl,
-            `autolensai/vehicles/${image.vehicle_id}`
+          const bgRemovalUrl = await cloudinaryService.removeBackgroundWithAI(
+            image.cloudinary_public_id,
+            {
+              prompt: validatedData.options?.prompt,
+              hint: validatedData.options?.hint
+            }
           );
+          result = {
+            publicId: image.cloudinary_public_id,
+            url: bgRemovalUrl,
+            operation: 'background_removal'
+          };
           break;
 
         case 'enhance':
@@ -105,6 +140,99 @@ export async function POST(request: NextRequest) {
             sourceUrl,
             `autolensai/vehicles/${image.vehicle_id}`
           );
+          break;
+
+        case 'ai_enhance':
+          const enhancedUrl = await cloudinaryService.enhanceVehicleWithAI(
+            image.cloudinary_public_id,
+            true
+          );
+          result = {
+            publicId: image.cloudinary_public_id,
+            url: enhancedUrl,
+            operation: 'ai_enhancement'
+          };
+          break;
+
+        case 'generative_fill':
+          const fillUrl = await cloudinaryService.generativeFillBackground(
+            image.cloudinary_public_id,
+            {
+              prompt: validatedData.options?.prompt || 'luxury car showroom background',
+              width: validatedData.options?.width,
+              height: validatedData.options?.height
+            }
+          );
+          result = {
+            publicId: image.cloudinary_public_id,
+            url: fillUrl,
+            operation: 'generative_fill'
+          };
+          break;
+
+        case 'object_replace':
+          if (!validatedData.options?.fromObject || !validatedData.options?.toObject) {
+            throw new Error('fromObject and toObject are required for object replacement');
+          }
+          const replaceUrl = await cloudinaryService.replaceObjectWithAI(
+            image.cloudinary_public_id,
+            {
+              from: validatedData.options.fromObject,
+              to: validatedData.options.toObject,
+              prompt: validatedData.options.prompt
+            }
+          );
+          result = {
+            publicId: image.cloudinary_public_id,
+            url: replaceUrl,
+            operation: 'object_replacement'
+          };
+          break;
+
+        case 'add_watermark':
+          const watermarkUrl = await cloudinaryService.applyBrandOverlay(
+            image.cloudinary_public_id
+          );
+          result = {
+            publicId: image.cloudinary_public_id,
+            url: watermarkUrl,
+            operation: 'watermark'
+          };
+          break;
+
+        case 'add_pricing':
+          if (!validatedData.options?.text) {
+            throw new Error('Text is required for pricing overlay');
+          }
+          const pricingUrl = await cloudinaryService.addTextOverlay(
+            image.cloudinary_public_id,
+            {
+              text: validatedData.options.text,
+              fontSize: validatedData.options.fontSize || 72,
+              color: validatedData.options.textColor || '#ffffff'
+            }
+          );
+          result = {
+            publicId: image.cloudinary_public_id,
+            url: pricingUrl,
+            operation: 'pricing_overlay'
+          };
+          break;
+
+        case 'generate_social_card':
+          if (!validatedData.options?.vehicleInfo) {
+            throw new Error('Vehicle info is required for social card generation');
+          }
+          const socialCardUrl = await cloudinaryService.generateSocialCard(
+            image.cloudinary_public_id,
+            validatedData.options.vehicleInfo
+          );
+          result = {
+            publicId: image.cloudinary_public_id,
+            url: socialCardUrl,
+            operation: 'social_card',
+            dimensions: { width: 1200, height: 630 }
+          };
           break;
 
         case 'create_thumbnail':
@@ -118,6 +246,7 @@ export async function POST(request: NextRequest) {
             url: thumbnailUrl,
             width: validatedData.options?.width || 400,
             height: validatedData.options?.height || 300,
+            operation: 'thumbnail'
           };
           break;
 

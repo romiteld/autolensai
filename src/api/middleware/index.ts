@@ -14,6 +14,22 @@ export * from './error-handler';
 
 // Re-export authentication components
 export * from '@/core/auth';
+export { AuthGuard, withAuth, withOptionalAuth, requireAuth, requireRole, requirePermission, checkOwnership } from '@/core/auth/guards/auth.guard';
+
+// Create withRequiredAuth wrapper for protected API routes
+export function withRequiredAuth<T = any>(
+  handler: (request: NextRequest, context: import('@/core/auth/guards/auth.guard').AuthContext) => Promise<NextResponse<T>>
+) {
+  return async (request: NextRequest): Promise<NextResponse<T>> => {
+    const { context, response } = await AuthGuard.validateAuth(request, { required: true });
+    
+    if (response) {
+      return response as NextResponse<T>;
+    }
+
+    return handler(request, context);
+  };
+}
 
 interface MiddlewareOptions {
   rateLimit?: Parameters<typeof createRateLimiter>[0];

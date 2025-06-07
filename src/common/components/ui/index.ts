@@ -7,3 +7,5 @@ export { FileUpload } from './file-upload';
 export { EnhancedButton } from './enhanced-button';
 export { EnhancedCard, EnhancedCardHeader, EnhancedCardTitle, EnhancedCardDescription, EnhancedCardContent } from './enhanced-card';
 export { AnimatedCounter, StatisticCard } from './animated-counter';
+export { default as ComparisonSlider, AdvancedComparison } from './comparison-slider';
+export { default as ImageProcessingPreview } from './image-processing-preview';

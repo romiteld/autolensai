@@ -332,6 +332,53 @@ export interface Database {
           updated_at?: string
         }
       }
+      inquiries: {
+        Row: {
+          id: string
+          vehicle_id: string
+          seller_id: string
+          inquirer_name: string
+          inquirer_email: string
+          inquirer_phone: string | null
+          message: string
+          inquiry_type: 'general' | 'test_drive' | 'financing' | 'inspection'
+          status: 'pending' | 'responded' | 'closed'
+          created_at: string
+          updated_at: string
+          responded_at: string | null
+          response_message: string | null
+        }
+        Insert: {
+          id?: string
+          vehicle_id: string
+          seller_id: string
+          inquirer_name: string
+          inquirer_email: string
+          inquirer_phone?: string | null
+          message: string
+          inquiry_type: 'general' | 'test_drive' | 'financing' | 'inspection'
+          status?: 'pending' | 'responded' | 'closed'
+          created_at?: string
+          updated_at?: string
+          responded_at?: string | null
+          response_message?: string | null
+        }
+        Update: {
+          id?: string
+          vehicle_id?: string
+          seller_id?: string
+          inquirer_name?: string
+          inquirer_email?: string
+          inquirer_phone?: string | null
+          message?: string
+          inquiry_type?: 'general' | 'test_drive' | 'financing' | 'inspection'
+          status?: 'pending' | 'responded' | 'closed'
+          created_at?: string
+          updated_at?: string
+          responded_at?: string | null
+          response_message?: string | null
+        }
+      }
     }
     Views: {
       [_ in never]: never

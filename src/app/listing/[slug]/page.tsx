@@ -11,9 +11,9 @@ import { SocialShare } from '@/app/listing/[slug]/components/social-share';
 import { VehicleJsonLd } from '@/app/listing/[slug]/components/vehicle-json-ld';
 
 interface VehicleListingPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getVehicleBySlug(slug: string): Promise<VehicleWithImages | null> {
@@ -39,7 +39,8 @@ async function getVehicleBySlug(slug: string): Promise<VehicleWithImages | null>
 export async function generateMetadata({
   params,
 }: VehicleListingPageProps): Promise<Metadata> {
-  const vehicle = await getVehicleBySlug(params.slug);
+  const resolvedParams = await params;
+  const vehicle = await getVehicleBySlug(resolvedParams.slug);
   
   if (!vehicle) {
     return {
@@ -71,7 +72,7 @@ export async function generateMetadata({
       title,
       description,
       type: 'website',
-      url: `${process.env.NEXT_PUBLIC_BASE_URL}/listing/${params.slug}`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/listing/${resolvedParams.slug}`,
       images: imageUrl ? [
         {
           url: imageUrl,
@@ -89,7 +90,7 @@ export async function generateMetadata({
       images: imageUrl ? [imageUrl] : [],
     },
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/listing/${params.slug}`,
+      canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/listing/${resolvedParams.slug}`,
     },
   };
 }
@@ -97,7 +98,8 @@ export async function generateMetadata({
 export default async function VehicleListingPage({
   params,
 }: VehicleListingPageProps) {
-  const vehicle = await getVehicleBySlug(params.slug);
+  const resolvedParams = await params;
+  const vehicle = await getVehicleBySlug(resolvedParams.slug);
 
   if (!vehicle || vehicle.status !== 'active') {
     notFound();

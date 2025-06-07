@@ -14,6 +14,9 @@ import { authProvider } from './providers/supabase.provider';
 import { AuthGuard } from './guards/auth.guard';
 import { jwtStrategy } from './strategies/jwt.strategy';
 
+// Export auth provider directly
+export { authProvider };
+
 export const auth = {
   provider: authProvider,
   guard: AuthGuard,
