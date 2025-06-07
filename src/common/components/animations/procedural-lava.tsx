@@ -289,4 +289,8 @@ export const ProceduralLavaBackground = ({
   );
 };
 
+// Export aliases for compatibility
+export const ProceduralLava = ProceduralLavaBackground;
+export const MeshAnim = AnimatedMesh;
+
 export default ProceduralLavaBackground;

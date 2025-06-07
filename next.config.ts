@@ -4,10 +4,12 @@ const nextConfig: NextConfig = {
   // Enable experimental features
   experimental: {
     optimizePackageImports: ['@react-three/fiber', '@react-three/drei'],
-    turbo: {
-      resolveAlias: {
-        '@/*': './src/*',
-      },
+  },
+
+  // Turbopack configuration
+  turbopack: {
+    resolveAlias: {
+      '@/*': './src/*',
     },
   },
 
@@ -42,7 +44,6 @@ const nextConfig: NextConfig = {
   },
 
   // Performance optimizations
-  swcMinify: true,
   compress: true,
   poweredByHeader: false,
 

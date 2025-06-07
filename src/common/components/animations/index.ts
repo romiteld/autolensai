@@ -30,4 +30,4 @@ export { LiquidFilters, LiquidShape } from './liquid-filters';
 export { AutomotiveFluidBackground } from './automotive-background';
 export { LavaBackground } from './lava-background';
 export { AnimationCanvas, Anim } from './lava-canvas';
-export { ProceduralLava, ProceduralLavaBackground, MeshAnim } from './procedural-lava';
+export { ProceduralLavaBackground, ProceduralLava, MeshAnim } from './procedural-lava';

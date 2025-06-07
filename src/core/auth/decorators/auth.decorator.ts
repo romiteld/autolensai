@@ -210,7 +210,7 @@ export function withRequiredPermissions(permissions: string[]) {
   };
 }
 
-export function withOptionalAuth(handler: AuthenticatedHandler): HandlerWithAuth {
+export function withOptionalAuthDecorator(handler: AuthenticatedHandler): HandlerWithAuth {
   return async (request: NextRequest): Promise<NextResponse> => {
     const context = await AuthGuard.optionalAuth(request);
     return handler(request, context);

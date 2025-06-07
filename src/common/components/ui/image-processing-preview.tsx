@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { CloudinaryClientService } from '@/ai/services/cloudinary-client.service';
-import { ComparisonSlider, AdvancedComparison } from './comparison-slider';
+import ComparisonSlider, { AdvancedComparison } from './comparison-slider';
 import { Button, Card, CardContent, CardHeader, CardTitle } from '@/common/components/ui';
 import { 
   Download, 
@@ -36,7 +36,7 @@ export default function ImageProcessingPreview({
   const [loading, setLoading] = useState(true);
   const [socialCardUrl, setSocialCardUrl] = useState<string>('');
   
-  const cloudinaryService = new CloudinaryService();
+  const cloudinaryService = new CloudinaryClientService();
 
   const effectOptions = [
     { 
