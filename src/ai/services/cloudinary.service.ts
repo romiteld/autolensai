@@ -10,7 +10,7 @@ cloudinary.config({
 
 export interface CloudinaryTransformation {
   effect?: string;
-  quality?: string;
+  quality?: string | number;
   format?: string;
   width?: number;
   height?: number;
@@ -20,6 +20,7 @@ export interface CloudinaryTransformation {
   background?: string;
   color?: string;
   opacity?: number;
+  flags?: string;
   x?: number;
   y?: number;
 }

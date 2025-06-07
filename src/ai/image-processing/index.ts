@@ -1,27 +1,31 @@
 // Image Processing Services
-export { BackgroundRemovalService } from './background-removal/background-removal.service';
-export type { 
-  BackgroundRemovalOptions, 
-  BackgroundRemovalResult 
+import { BackgroundRemovalService } from './background-removal/background-removal.service';
+import { ImageEnhancementService } from './enhancement/image-enhancement.service';
+import { ImageOptimizationService } from './optimization/image-optimization.service';
+import { WatermarkService } from './watermark/watermark.service';
+
+export {
+  BackgroundRemovalService,
+  ImageEnhancementService,
+  ImageOptimizationService,
+  WatermarkService
+};
+export type {
+  BackgroundRemovalOptions,
+  BackgroundRemovalResult
 } from './background-removal/background-removal.service';
-
-export { ImageEnhancementService } from './enhancement/image-enhancement.service';
-export type { 
-  EnhancementOptions, 
-  EnhancementResult 
+export type {
+  EnhancementOptions,
+  EnhancementResult
 } from './enhancement/image-enhancement.service';
-
-export { ImageOptimizationService } from './optimization/image-optimization.service';
-export type { 
-  OptimizationOptions, 
-  OptimizationResult, 
-  ResponsiveImageSet 
+export type {
+  OptimizationOptions,
+  OptimizationResult,
+  ResponsiveImageSet
 } from './optimization/image-optimization.service';
-
-export { WatermarkService } from './watermark/watermark.service';
-export type { 
-  WatermarkOptions, 
-  WatermarkResult 
+export type {
+  WatermarkOptions,
+  WatermarkResult
 } from './watermark/watermark.service';
 
 // Unified Image Processing Service
