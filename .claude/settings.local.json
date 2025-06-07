@@ -32,7 +32,9 @@
       "Bash(git push:*)",
       "Bash(git pull:*)",
       "Bash(find:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(npm config get:*)",
+      "Bash(git rebase:*)"
     ],
     "deny": []
   }

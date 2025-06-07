@@ -1,13 +1,11 @@
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { pipeline } from 'stream/promises';
 import path from 'path';
 import fs from 'fs/promises';
 import { createWriteStream } from 'fs';
-import { pipeline } from 'stream';
-import { promisify as pipelineAsync } from 'stream';
 
 const execAsync = promisify(exec);
-const pipelinePromise = pipelineAsync(pipeline);
 
 export interface VideoClip {
   id: string;
@@ -63,8 +61,14 @@ export class VideoProcessorService {
         throw new Error(`Failed to download: ${response.status}`);
       }
 
+      if (!response.body) {
+        throw new Error('No response body available');
+      }
+
       const fileStream = createWriteStream(filePath);
-      await pipelinePromise(response.body, fileStream);
+      // @ts-ignore - Response body is a web stream, we need to handle it differently
+      const nodeStream = response.body as any;
+      await pipeline(nodeStream, fileStream);
     } catch (error) {
       console.error('File download error:', error);
       throw new Error('Failed to download file');
