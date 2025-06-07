@@ -2,8 +2,7 @@
 
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { Button } from '@/common/components/ui/button';
-import { Card, CardContent } from '@/common/components/ui/card';
+import { Button, Card, CardContent } from '@/common/components/ui';
 import { 
   Reveal, 
   StaggeredReveal, 

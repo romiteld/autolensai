@@ -4,10 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { createSupabaseClient } from '@/core/database/supabase';
-import { Button } from '@/common/components/ui/button';
-import { Input } from '@/common/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/common/components/ui/card';
-import { Alert } from '@/common/components/ui/alert';
+import { Button, Input, Card, CardContent, CardDescription, CardHeader, CardTitle, Alert } from '@/common/components/ui';
 import { resetPasswordSchema, type ResetPasswordFormData } from '@/common/types/auth.types';
 import { Eye, EyeOff, Lock } from 'lucide-react';
 

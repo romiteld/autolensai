@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import { Button } from '@/common/components/ui/button';
-import { Card } from '@/common/components/ui/card';
+import { Button, Card } from '@/common/components/ui';
 
 export default function VehicleNotFound() {
   return (

@@ -5,7 +5,7 @@ import { OrbitControls, Environment, PresentationControls, Stage } from '@react-
 import { TextureLoader } from 'three';
 import { Suspense, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/common/components/ui/button';
+import { Button } from '@/common/components/ui';
 import { RotateCcw, Maximize2, Play, Pause } from 'lucide-react';
 
 interface Vehicle360ViewerProps {

@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/common/components/ui/button';
-import { Card } from '@/common/components/ui/card';
+import { Button, Card } from '@/common/components/ui';
 import { VehicleWithImages } from '@/vehicle/models/vehicle.model';
 
 interface SocialShareProps {

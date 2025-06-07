@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { VehicleImage } from '@/vehicle/models/vehicle.model';
-import { Button } from '@/common/components/ui/button';
-import { Card } from '@/common/components/ui/card';
+import { Button, Card } from '@/common/components/ui';
 
 interface VehicleImageGalleryProps {
   images: VehicleImage[];

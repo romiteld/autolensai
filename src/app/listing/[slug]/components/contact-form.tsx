@@ -1,10 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/common/components/ui/button';
-import { Input } from '@/common/components/ui/input';
-import { Card } from '@/common/components/ui/card';
-import { Alert } from '@/common/components/ui/alert';
+import { Button, Input, Card, Alert } from '@/common/components/ui';
 import { VehicleWithImages } from '@/vehicle/models/vehicle.model';
 
 interface ContactFormProps {

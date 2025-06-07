@@ -3,10 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { createSupabaseClient } from '@/core/database/supabase';
-import { Button } from '@/common/components/ui/button';
-import { Input } from '@/common/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/common/components/ui/card';
-import { Alert } from '@/common/components/ui/alert';
+import { Button, Input, Card, CardContent, CardDescription, CardHeader, CardTitle, Alert } from '@/common/components/ui';
 import { forgotPasswordSchema, type ForgotPasswordFormData } from '@/common/types/auth.types';
 import { Mail, ArrowLeft } from 'lucide-react';
 
