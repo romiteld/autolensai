@@ -5,8 +5,8 @@ export interface CloudinaryTransformation {
   effect?: string;
   quality?: string | number;
   format?: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   crop?: string;
   gravity?: string;
   overlay?: any;
